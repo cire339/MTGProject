@@ -5,7 +5,7 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class CardSet {
+public class CardSetJson {
 
 	@SerializedName("name")
 	@Expose
@@ -13,6 +13,9 @@ public class CardSet {
 	@SerializedName("code")
 	@Expose
 	private String code;
+	@SerializedName("block")
+	@Expose
+	private String block;
 	@SerializedName("gathererCode")
 	@Expose
 	private String gathererCode;
@@ -31,12 +34,12 @@ public class CardSet {
 	@SerializedName("type")
 	@Expose
 	private String type;
-	@SerializedName("booster")
-	@Expose
-	private Object booster = new Object[15];
 	@SerializedName("cards")
 	@Expose
-	private List<Card> cards = new ArrayList<Card>();
+	private List<CardJson> cards = new ArrayList<CardJson>();
+	@SerializedName("onlineOnly")
+	@Expose
+	private Boolean onlineOnly;
 	
 	/**
 	* 
@@ -167,27 +170,9 @@ public class CardSet {
 	/**
 	* 
 	* @return
-	* The booster
-	*/
-	public Object getBooster() {
-		return booster;
-	}
-
-	/**
-	* 
-	* @param booster
-	* The booster
-	*/
-	public void setBooster(Object booster) {
-		this.booster = booster;
-	}
-	
-	/**
-	* 
-	* @return
 	* The cards
 	*/
-	public List<Card> getCards() {
+	public List<CardJson> getCards() {
 		return cards;
 	}
 	
@@ -196,7 +181,7 @@ public class CardSet {
 	* @param cards
 	* The cards
 	*/
-	public void setCards(List<Card> cards) {
+	public void setCards(List<CardJson> cards) {
 		this.cards = cards;
 	}
 
@@ -212,6 +197,34 @@ public class CardSet {
 	 */
 	public void setOldCode(String oldCode) {
 		this.oldCode = oldCode;
+	}
+
+	/**
+	 * @return the block
+	 */
+	public String getBlock() {
+		return block;
+	}
+
+	/**
+	 * @param block the block to set
+	 */
+	public void setBlock(String block) {
+		this.block = block;
+	}
+
+	/**
+	 * @return the onlineonly
+	 */
+	public Boolean getOnlineOnly() {
+		return onlineOnly;
+	}
+
+	/**
+	 * @param onlineonly the onlineonly to set
+	 */
+	public void setOnlineOnly(Boolean onlineOnly) {
+		this.onlineOnly = onlineOnly;
 	}
 
 }
