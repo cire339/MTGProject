@@ -24,8 +24,12 @@ public class TestingClass {
 			PriceScrapper.generateCsvSetPrices(sets.get(i));
 		}*/
 		
-		QueryDatabase.getCard("allo");
+		//QueryDatabase.getCard("allo");
 		PopulateDatabase.populateDatabaseFromJson();
+		
+		System.out.println("Back in main.");
+		
+		System.exit(0);
 		
 	}
 

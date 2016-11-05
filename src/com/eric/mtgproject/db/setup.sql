@@ -1,110 +1,48 @@
-CREATE TABLE card
-(
-	CardID VARCHAR(255),
-	Artist VARCHAR(255),
-	Border VARCHAR(255),
-	CMC VARCHAR(255),
-	ColorIdentity VARCHAR(255),
-	Colors VARCHAR(255),
-	Flavor VARCHAR(255),
-	ImageName VARCHAR(255),
-	Layout VARCHAR(255),
-	Loyalty VARCHAR(255),
-	ManaCost VARCHAR(255),
-	MCINumber VARCHAR(255),
-	MultiverseID INTEGER,
-	Name VARCHAR(255),
-	CardNames VARCHAR(255),
-	CardNumber VARCHAR(255),
-	CardPower VARCHAR(255),
-	Rarity VARCHAR(255),
-	Reserved BOOLEAN,
-	SetID VARCHAR(255),
-	Subtypes VARCHAR(255),
-	SuperTypes VARCHAR(255),
-	Text VARCHAR(255),
-	TimeShifted BOOLEAN,
-	Toughness VARCHAR(255),
-	CardType VARCHAR(255),
-	Types VARCHAR(255),
-	Variations VARCHAR(255),
-	Watermark VARCHAR(255)
-);
+CREATE TABLE `card` (
+  `CardID` varchar(255) NOT NULL,
+  `Artist` varchar(255) NOT NULL,
+  `Border` varchar(255) DEFAULT NULL,
+  `CMC` varchar(255) DEFAULT NULL,
+  `ColorIdentity` varchar(255) NOT NULL,
+  `Colors` varchar(255) NOT NULL,
+  `Flavor` varchar(500) DEFAULT NULL,
+  `ImageName` varchar(255) NOT NULL,
+  `Layout` varchar(255) DEFAULT NULL,
+  `Loyalty` varchar(255) DEFAULT NULL,
+  `ManaCost` varchar(255) DEFAULT NULL,
+  `MCINumber` varchar(255) DEFAULT NULL,
+  `MultiverseID` varchar(255) DEFAULT NULL,
+  `Name` varchar(255) NOT NULL,
+  `CardNames` varchar(255) DEFAULT NULL,
+  `CardNumber` varchar(255) DEFAULT NULL,
+  `CardPower` varchar(255) DEFAULT NULL,
+  `Rarity` varchar(255) NOT NULL,
+  `Reserved` tinyint(1) DEFAULT NULL,
+  `SetID` varchar(255) NOT NULL,
+  `Subtypes` varchar(255) DEFAULT NULL,
+  `SuperTypes` varchar(255) DEFAULT NULL,
+  `Text` varchar(1000) DEFAULT NULL,
+  `TimeShifted` tinyint(1) DEFAULT NULL,
+  `Toughness` varchar(255) DEFAULT NULL,
+  `CardType` varchar(255) NOT NULL,
+  `Types` varchar(255) NOT NULL,
+  `Variations` varchar(255) DEFAULT NULL,
+  `Watermark` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`CardID`),
+  KEY `card_setid_fk` (`SetID`),
+  CONSTRAINT `card_setid_fk` FOREIGN KEY (`SetID`) REFERENCES `card_set` (`SetID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1
 
-CREATE TABLE card_set
-(
-	SetID VARCHAR(255),
-	Block VARCHAR(255),
-	Border VARCHAR(255),
-	GathererCode VARCHAR(255),
-	MagicCardsInfoCode VARCHAR(255),
-	OldCode VARCHAR(255),
-    OnlineOnly BOOLEAN,
-	ReleaseDate VARCHAR(255),
-	SetName VARCHAR(255),
-	SetType VARCHAR(255)
-);
-
-ALTER TABLE card
-CHANGE COLUMN CardID CardID VARCHAR(255) NOT NULL,
-ADD PRIMARY KEY (CardID);
-
-/* Make fields non nulable CARD table */
-ALTER TABLE card
-CHANGE COLUMN CMC CMC VARCHAR(255) NOT NULL;
-
-ALTER TABLE card
-CHANGE COLUMN Artist Artist VARCHAR(255) NOT NULL;
-
-ALTER TABLE card
-CHANGE COLUMN CMC CMC VARCHAR(255) NOT NULL;
-
-ALTER TABLE card
-CHANGE COLUMN ColorIdentity ColorIdentity VARCHAR(255) NOT NULL;
-
-ALTER TABLE card
-CHANGE COLUMN Colors Colors VARCHAR(255) NOT NULL;
-
-ALTER TABLE card
-CHANGE COLUMN ImageName ImageName VARCHAR(255) NOT NULL;
-
-ALTER TABLE card
-CHANGE COLUMN Name Name VARCHAR(255) NOT NULL;
-
-ALTER TABLE card
-CHANGE COLUMN Rarity Rarity VARCHAR(255) NOT NULL;
-
-ALTER TABLE card
-CHANGE COLUMN SetID SetID VARCHAR(255) NOT NULL;
-
-ALTER TABLE card
-CHANGE COLUMN CardType CardType VARCHAR(255) NOT NULL;
-
-ALTER TABLE card
-CHANGE COLUMN Types Types VARCHAR(255) NOT NULL;
-
-/* Make fields non nulable CARDSET table */
-ALTER TABLE card_set
-CHANGE COLUMN SetID SetID VARCHAR(255) NOT NULL,
-ADD PRIMARY KEY (SetID);
-
-ALTER TABLE card_set
-CHANGE COLUMN Border Border VARCHAR(255) NOT NULL;
-
-ALTER TABLE card_set
-CHANGE COLUMN OnlineOnly OnlineOnly BOOLEAN NOT NULL;
-
-ALTER TABLE card_set
-CHANGE COLUMN ReleaseDate ReleaseDate VARCHAR(255) NOT NULL;
-
-ALTER TABLE card_set
-CHANGE COLUMN SetName SetName VARCHAR(255) NOT NULL;
-
-ALTER TABLE card_set
-CHANGE COLUMN SetType SetType VARCHAR(255) NOT NULL;
-
-ALTER TABLE card
-ADD CONSTRAINT card_setid_fk
-FOREIGN KEY(SetID)
-REFERENCES card_set(SetID);
-
+CREATE TABLE `card_set` (
+  `SetID` varchar(255) NOT NULL,
+  `Block` varchar(255) DEFAULT NULL,
+  `Border` varchar(255) NOT NULL,
+  `GathererCode` varchar(255) DEFAULT NULL,
+  `MagicCardsInfoCode` varchar(255) DEFAULT NULL,
+  `OldCode` varchar(255) DEFAULT NULL,
+  `OnlineOnly` tinyint(1) NOT NULL,
+  `ReleaseDate` varchar(255) NOT NULL,
+  `SetName` varchar(255) NOT NULL,
+  `SetType` varchar(255) NOT NULL,
+  PRIMARY KEY (`SetID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1

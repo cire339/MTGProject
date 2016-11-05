@@ -29,7 +29,7 @@ public class Card implements java.io.Serializable {
 	private String loyalty;
 	private String manaCost;
 	private String mcinumber;
-	private Integer multiverseId;
+	private String multiverseId;
 	private String name;
 	private String cardNames;
 	private String cardNumber;
@@ -66,7 +66,7 @@ public class Card implements java.io.Serializable {
 
 	public Card(String cardId, CardSet cardSet, String artist, String border, String cmc, String colorIdentity,
 			String colors, String flavor, String imageName, String layout, String loyalty, String manaCost,
-			String mcinumber, Integer multiverseId, String name, String cardNames, String cardNumber, String cardPower,
+			String mcinumber, String multiverseId, String name, String cardNames, String cardNumber, String cardPower,
 			String rarity, Boolean reserved, String subtypes, String superTypes, String text, Boolean timeShifted,
 			String toughness, String cardType, String types, String variations, String watermark) {
 		this.cardId = cardId;
@@ -139,7 +139,7 @@ public class Card implements java.io.Serializable {
 		this.border = border;
 	}
 
-	@Column(name = "CMC", nullable = false)
+	@Column(name = "CMC")
 	public String getCmc() {
 		return this.cmc;
 	}
@@ -221,11 +221,11 @@ public class Card implements java.io.Serializable {
 	}
 
 	@Column(name = "MultiverseID")
-	public Integer getMultiverseId() {
+	public String getMultiverseId() {
 		return this.multiverseId;
 	}
 
-	public void setMultiverseId(Integer multiverseId) {
+	public void setMultiverseId(String multiverseId) {
 		this.multiverseId = multiverseId;
 	}
 
