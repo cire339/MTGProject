@@ -1,5 +1,5 @@
 package com.eric.mtgproject.db;
-// Generated 3-Nov-2016 10:49:47 AM by Hibernate Tools 5.2.0.Beta1
+// Generated 10-Nov-2016 6:56:03 PM by Hibernate Tools 5.2.0.Beta1
 
 import java.util.HashSet;
 import java.util.Set;

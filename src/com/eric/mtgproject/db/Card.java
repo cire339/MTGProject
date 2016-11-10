@@ -1,5 +1,5 @@
 package com.eric.mtgproject.db;
-// Generated 3-Nov-2016 10:49:47 AM by Hibernate Tools 5.2.0.Beta1
+// Generated 10-Nov-2016 6:56:03 PM by Hibernate Tools 5.2.0.Beta1
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -49,12 +49,11 @@ public class Card implements java.io.Serializable {
 	public Card() {
 	}
 
-	public Card(String cardId, CardSet cardSet, String artist, String cmc, String colorIdentity, String colors,
-			String imageName, String name, String rarity, String cardType, String types) {
+	public Card(String cardId, CardSet cardSet, String artist, String colorIdentity, String colors, String imageName,
+			String name, String rarity, String cardType, String types) {
 		this.cardId = cardId;
 		this.cardSet = cardSet;
 		this.artist = artist;
-		this.cmc = cmc;
 		this.colorIdentity = colorIdentity;
 		this.colors = colors;
 		this.imageName = imageName;
@@ -166,7 +165,7 @@ public class Card implements java.io.Serializable {
 		this.colors = colors;
 	}
 
-	@Column(name = "Flavor")
+	@Column(name = "Flavor", length = 500)
 	public String getFlavor() {
 		return this.flavor;
 	}
@@ -301,7 +300,7 @@ public class Card implements java.io.Serializable {
 		this.superTypes = superTypes;
 	}
 
-	@Column(name = "Text")
+	@Column(name = "Text", length = 1000)
 	public String getText() {
 		return this.text;
 	}
