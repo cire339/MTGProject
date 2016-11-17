@@ -19,13 +19,19 @@
 	   </div>
 	
 	   <div class="container">
-	    <c:if test="${not empty lists}">
+	    <c:if test="${not empty setList}">
 			<ul>
-				<c:forEach var="listValue" items="${lists}">
-					<li class="list">${listValue.getSetName()}</li>
+				<c:forEach var="set" items="${setList}">
+					<li class="list"><a href="./Sets.htm?set=${set.getSetId()}">${set.getSetName()}</a></li>
 				</c:forEach>
 			</ul>
-	
+		</c:if>
+		<c:if test="${not empty cardList}">
+			<ul>
+				<c:forEach var="card" items="${cardList}">
+					<li class="list"><a href="./Card.htm?card=${card.getCardId()}">${card.getName()}</a></li>
+				</c:forEach>
+			</ul>
 		</c:if>
 	
 		<footer>

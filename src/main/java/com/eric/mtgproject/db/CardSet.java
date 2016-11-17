@@ -17,6 +17,10 @@ import javax.persistence.Table;
 @Table(name = "card_set", catalog = "mtg")
 public class CardSet implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6300284416355496705L;
 	private String setId;
 	private String block;
 	private String border;

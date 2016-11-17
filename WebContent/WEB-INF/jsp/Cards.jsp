@@ -19,10 +19,10 @@
 	   </div>
 	
 	   <div class="container">
-	    <c:if test="${not empty lists}">
+	    <c:if test="${not empty listCards}">
 			<ul>
-				<c:forEach var="listValue" items="${lists}">
-					<li class="list">${listValue.getName()}</li>
+				<c:forEach var="card" items="${listCards}">
+					<li class="list">${card.getName()}</li>
 				</c:forEach>
 			</ul>
 	

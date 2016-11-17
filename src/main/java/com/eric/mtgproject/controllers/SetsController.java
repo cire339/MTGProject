@@ -2,6 +2,7 @@ package com.eric.mtgproject.controllers;
 
 import org.springframework.web.servlet.mvc.Controller;
 
+import com.eric.mtgproject.db.Card;
 import com.eric.mtgproject.db.CardSet;
 import com.eric.mtgproject.helpers.QueryDatabase;
 
@@ -24,11 +25,18 @@ public class SetsController implements Controller {
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+    	
+    	String setID = request.getParameter("set");
+    	
     	ModelAndView model = new ModelAndView("WEB-INF/jsp/Sets.jsp");
     	
-    	List<CardSet> querySetsResults = QueryDatabase.getSets();
-    	
-    	model.addObject("lists", querySetsResults);
+    	if(setID == null){
+	    	List<CardSet> querySetsResults = QueryDatabase.getSets();
+	    	model.addObject("setList", querySetsResults);
+    	}else{
+    		List<Card> queryCardsResults = QueryDatabase.getCardsBySetId(setID);
+    		model.addObject("cardList", queryCardsResults);
+    	}
     	
     	return model;
 

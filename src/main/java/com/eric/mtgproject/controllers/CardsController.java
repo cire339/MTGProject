@@ -26,9 +26,9 @@ public class CardsController implements Controller {
 
     	ModelAndView model = new ModelAndView("WEB-INF/jsp/Cards.jsp");
     	
-    	List<Card> queryCardsResults = QueryDatabase.getCardsBySet("Battle for Zendikar");
+    	List<Card> queryCardsResults = QueryDatabase.getCardsBySetName("Battle for Zendikar");
     	
-    	model.addObject("lists", queryCardsResults);
+    	model.addObject("cards", queryCardsResults);
     	
     	return model;
 

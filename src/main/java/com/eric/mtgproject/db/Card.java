@@ -16,6 +16,10 @@ import javax.persistence.Table;
 @Table(name = "card", catalog = "mtg")
 public class Card implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8239445077533494936L;
 	private String cardId;
 	private CardSet cardSet;
 	private String artist;
