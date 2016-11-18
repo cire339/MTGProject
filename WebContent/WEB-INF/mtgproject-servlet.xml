@@ -7,7 +7,7 @@
 
   <!-- the application context definition for the springapp DispatcherServlet -->
 
-  <bean name="/Cards.htm" class="com.eric.mtgproject.controllers.CardsController"/>
+  <bean name="/Cards.htm" init-method="init" class="com.eric.mtgproject.controllers.CardsController"/>
   <bean name="/Sets.htm" class="com.eric.mtgproject.controllers.SetsController"/>
 
 </beans>

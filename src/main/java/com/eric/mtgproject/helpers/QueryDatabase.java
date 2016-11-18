@@ -4,23 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
-
 import com.eric.mtgproject.db.Card;
 import com.eric.mtgproject.db.CardSet;
+import com.eric.mtgproject.db.HibernateUtils;
 
 public class QueryDatabase {
 	
 @SuppressWarnings("unchecked")
 public static List<CardSet> getSets(){
-		
-		Configuration cfg = new Configuration();
-		cfg.configure("hibernate.cfg.xml");
-		
-        SessionFactory factory = cfg.buildSessionFactory();
-        Session session = factory.openSession();
+    
+		Session session = HibernateUtils.getSession();
+	
         List<CardSet> querySetsResults = new ArrayList<CardSet>();
 		
 		try {
@@ -33,42 +28,30 @@ public static List<CardSet> getSets(){
 		
 		return querySetsResults;
 	}
-	
-	@SuppressWarnings("unchecked")
-	public static void getCardsByName(String cardName){
-		
-		Configuration cfg = new Configuration();
-		cfg.configure("hibernate.cfg.xml");
-		
-        SessionFactory factory = cfg.buildSessionFactory();
-        Session session = factory.openSession();
-		
-		try {
-        	Query<?> queryCards = session.createQuery("from Card C where C.name = :name ");
-        	queryCards.setParameter("name", cardName);
-        	List<Card> queryCardsResults = (List<Card>) queryCards.getResultList();
-        	
-        	for(int i=0; i<queryCardsResults.size(); i++){
-        		System.out.println(queryCardsResults.get(i).getName());
-        		System.out.println(queryCardsResults.get(i).getCmc());
-        	}
-        	
-        } catch (Exception e) {
-           System.out.println("Error " + e.getMessage());
-        } finally {
-        	session.close();
-        }
 
+	@SuppressWarnings("unchecked")
+	public static List<Card> getCardsById(String cardId){
+		
+		Session session = HibernateUtils.getSession();
+	    List<Card> queryCardsResults = new ArrayList<Card>();
+	    
+		try {
+	    	Query<?> queryCards = session.createQuery("from Card C where C.cardId = :id ");
+	    	queryCards.setParameter("id", cardId);
+	    	queryCardsResults = (List<Card>) queryCards.getResultList();
+	    	
+	    } catch (Exception e) {
+	       System.out.println("Error " + e.getMessage());
+	    }
+		
+		return queryCardsResults;
+	
 	}
 	
 	@SuppressWarnings("unchecked")
 	public static List<Card> getCardsBySetName(String setName){
 		
-		Configuration cfg = new Configuration();
-		cfg.configure("hibernate.cfg.xml");
-		
-        SessionFactory factory = cfg.buildSessionFactory();
-        Session session = factory.openSession();
+		Session session = HibernateUtils.getSession();
         List<Card> queryCardsResults = new ArrayList<Card>();
 		
 		try {
@@ -78,8 +61,6 @@ public static List<CardSet> getSets(){
         	
         } catch (Exception e) {
            System.out.println("Error " + e.getMessage());
-        } finally {
-        	session.close();
         }
 		
 		return queryCardsResults;
@@ -89,11 +70,7 @@ public static List<CardSet> getSets(){
 	@SuppressWarnings("unchecked")
 	public static List<Card> getCardsBySetId(String setId){
 		
-		Configuration cfg = new Configuration();
-		cfg.configure("hibernate.cfg.xml");
-		
-        SessionFactory factory = cfg.buildSessionFactory();
-        Session session = factory.openSession();
+		Session session = HibernateUtils.getSession();
         List<Card> queryCardsResults = new ArrayList<Card>();
 		
 		try {
@@ -103,8 +80,6 @@ public static List<CardSet> getSets(){
         	
         } catch (Exception e) {
            System.out.println("Error " + e.getMessage());
-        } finally {
-        	session.close();
         }
 		
 		return queryCardsResults;

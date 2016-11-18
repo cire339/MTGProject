@@ -23,7 +23,7 @@ public class TestingClass {
 			//PriceScrapper.generateCsvSetPrices(sets.get(i));
 		}
 		
-		QueryDatabase.getCardsByName("Thragtusk");
+		//QueryDatabase.getCardsByName("Thragtusk");
 		QueryDatabase.getCardsBySetName("Innistrad");
 		//PopulateDatabase.populateDatabaseFromJson();
 		

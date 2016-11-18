@@ -3,6 +3,7 @@ package com.eric.mtgproject.controllers;
 import org.springframework.web.servlet.mvc.Controller;
 
 import com.eric.mtgproject.db.Card;
+import com.eric.mtgproject.db.HibernateUtils;
 import com.eric.mtgproject.helpers.QueryDatabase;
 
 import org.springframework.web.servlet.ModelAndView;
@@ -24,14 +25,26 @@ public class CardsController implements Controller {
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+    	String cardID = request.getParameter("card");
+    	
     	ModelAndView model = new ModelAndView("WEB-INF/jsp/Cards.jsp");
     	
-    	List<Card> queryCardsResults = QueryDatabase.getCardsBySetName("Battle for Zendikar");
-    	
-    	model.addObject("cards", queryCardsResults);
+    	if(cardID != null){
+    		List<Card> queryCardsResults = QueryDatabase.getCardsById(cardID);
+    		if(queryCardsResults.size() == 1){
+    			model.addObject("cardInfo", queryCardsResults.get(0));
+    		}else{
+    			model = new ModelAndView("WEB-INF/jsp/errors/404.jsp");
+    		}
+    	}
     	
     	return model;
 
     }
+    
+    public void init() {
+        //Create Hibernate Session
+     	new HibernateUtils();
+     }
 
 }
