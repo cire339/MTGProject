@@ -1,4 +1,4 @@
-package com.eric.mtgproject.db;
+package com.eric.mtgproject.utils;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

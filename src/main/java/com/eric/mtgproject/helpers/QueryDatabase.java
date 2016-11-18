@@ -7,7 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import com.eric.mtgproject.db.Card;
 import com.eric.mtgproject.db.CardSet;
-import com.eric.mtgproject.db.HibernateUtils;
+import com.eric.mtgproject.utils.HibernateUtils;
 
 public class QueryDatabase {
 	

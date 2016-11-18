@@ -3,8 +3,8 @@ package com.eric.mtgproject.controllers;
 import org.springframework.web.servlet.mvc.Controller;
 
 import com.eric.mtgproject.db.Card;
-import com.eric.mtgproject.db.HibernateUtils;
 import com.eric.mtgproject.helpers.QueryDatabase;
+import com.eric.mtgproject.utils.HibernateUtils;
 
 import org.springframework.web.servlet.ModelAndView;
 
