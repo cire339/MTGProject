@@ -8,7 +8,7 @@
         <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" href="./index.jsp">MTG Project</a>
-      <a class="navbar-brand" href="./Sets.htm">Sets</a>
+      <a class="navbar-brand" href="./sets">Sets</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <form class="navbar-form navbar-right">

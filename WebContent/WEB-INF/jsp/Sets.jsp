@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@  taglib  prefix="c"   uri="http://java.sun.com/jsp/jstl/core"  %>
+<%@ taglib  prefix="c"   uri="http://java.sun.com/jsp/jstl/core"  %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
+	<title>Sets - MTG Project</title>
 	<jsp:include page="./includes/header.jsp" />
 	 <body>
 	
@@ -32,7 +33,7 @@
 		        <div class="col-md-4">
 		        	<table class="table table-striped">
 		                    </c:if>
-							<tr><td><i style="padding-right: 5px" class="ss ss-${set.getSetId().toLowerCase()}"></i><a href="./Sets.htm?set=${set.getSetId()}">${set.getSetName()}</a></td></tr>
+							<tr><td><i style="padding-right: 5px" class="ss ss-${set.getSetId().toLowerCase()}"></i><a href="./sets?set=${set.getSetId()}">${set.getSetName()}</a></td></tr>
 						</c:forEach>
 					</table>
 				</div>
@@ -47,7 +48,7 @@
 		        <div class="col-md-4">
 		        	<table class="table table-striped">
 		                    </c:if>
-							<tr><td><a href="./Cards.htm?card=${card.getCardId()}">${card.getName()}</a></td></tr>
+							<tr><td><a href="./cards?card=${card.getCardId()}">${card.getName()}</a></td></tr>
 						</c:forEach>
 					</table>
 				</div>

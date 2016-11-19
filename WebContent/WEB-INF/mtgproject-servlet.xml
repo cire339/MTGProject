@@ -14,7 +14,9 @@
 
   <!-- the application context definition for the springapp DispatcherServlet -->
 
-  <bean name="/Cards.htm" init-method="init" class="com.eric.mtgproject.controllers.CardsController"/>
-  <bean name="/Sets.htm" class="com.eric.mtgproject.controllers.SetsController"/>
+  <bean name="/cards" init-method="init" class="com.eric.mtgproject.controllers.CardsController"/>
+  <bean name="/sets" class="com.eric.mtgproject.controllers.SetsController"/>
+  
+  <mvc:resources mapping="/resources/**" location="/resources/" />
 
 </beans>
