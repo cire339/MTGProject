@@ -74,7 +74,7 @@ public static List<CardSet> getSets(){
         List<Card> queryCardsResults = new ArrayList<Card>();
 		
 		try {
-        	Query<?> queryCards = session.createQuery("from Card C where cardSet.setId = :setId");
+        	Query<?> queryCards = session.createQuery("from Card C where cardSet.setId = :setId order by name");
         	queryCards.setParameter("setId", setId);
         	queryCardsResults = (List<Card>) queryCards.getResultList();
         	
