@@ -1,12 +1,15 @@
 package com.eric.mtgproject.db;
-// Generated 10-Nov-2016 6:56:03 PM by Hibernate Tools 5.2.0.Beta1
+// Generated 19-Nov-2016 9:37:28 PM by Hibernate Tools 5.2.0.Beta1
 
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -16,10 +19,6 @@ import javax.persistence.Table;
 @Table(name = "card", catalog = "mtg")
 public class Card implements java.io.Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -8239445077533494936L;
 	private String cardId;
 	private CardSet cardSet;
 	private String artist;
@@ -49,6 +48,7 @@ public class Card implements java.io.Serializable {
 	private String types;
 	private String variations;
 	private String watermark;
+	private Set<CardPrice> cardPrices = new HashSet<CardPrice>(0);
 
 	public Card() {
 	}
@@ -71,7 +71,8 @@ public class Card implements java.io.Serializable {
 			String colors, String flavor, String imageName, String layout, String loyalty, String manaCost,
 			String mcinumber, String multiverseId, String name, String cardNames, String cardNumber, String cardPower,
 			String rarity, Boolean reserved, String subtypes, String superTypes, String text, Boolean timeShifted,
-			String toughness, String cardType, String types, String variations, String watermark) {
+			String toughness, String cardType, String types, String variations, String watermark,
+			Set<CardPrice> cardPrices) {
 		this.cardId = cardId;
 		this.cardSet = cardSet;
 		this.artist = artist;
@@ -101,6 +102,7 @@ public class Card implements java.io.Serializable {
 		this.types = types;
 		this.variations = variations;
 		this.watermark = watermark;
+		this.cardPrices = cardPrices;
 	}
 
 	@Id
@@ -365,6 +367,15 @@ public class Card implements java.io.Serializable {
 
 	public void setWatermark(String watermark) {
 		this.watermark = watermark;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "card")
+	public Set<CardPrice> getCardPrices() {
+		return this.cardPrices;
+	}
+
+	public void setCardPrices(Set<CardPrice> cardPrices) {
+		this.cardPrices = cardPrices;
 	}
 
 }

@@ -1,30 +1,30 @@
 package com.eric.mtgproject.helpers;
 
 import java.io.FileReader;
+import java.math.BigDecimal;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
 import com.eric.mtgproject.db.Card;
+import com.eric.mtgproject.db.CardPrice;
 import com.eric.mtgproject.db.CardSet;
 import com.eric.mtgproject.json.CardJson;
 import com.eric.mtgproject.json.CardSetJson;
+import com.eric.mtgproject.utils.HibernateUtils;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 
 public class PopulateDatabase {
 	
-public static void populateDatabaseFromJson(){
+	public static void populateDatabaseFromMTGJson(){
 		
-		Configuration cfg = new Configuration();
-		cfg.configure("hibernate.cfg.xml");
-		
-        SessionFactory factory = cfg.buildSessionFactory();
-        Session session = factory.openSession();
+		Session session = HibernateUtils.getSession();
         Transaction t;
 		
 		try {
@@ -145,4 +145,69 @@ public static void populateDatabaseFromJson(){
 
 	}
 
+	@SuppressWarnings("unchecked")
+	public static void updatePriceTable(Map<String, String> cardListMap, String setName){
+		
+		Session session = HibernateUtils.getSession();
+        Transaction t;
+        
+        try{
+	        t = session.beginTransaction();
+	        
+	        //Get Cards from the set we want to update
+	        List<Card> cardListDB = QueryDatabase.getCardsBySetName(setName);
+	        
+	        Card card = new Card();
+	        Iterator<Entry<String, String>> entries = cardListMap.entrySet().iterator();
+	        while (entries.hasNext()) {
+	        	
+				Entry<String, String> thisEntry = (Entry<String, String>) entries.next();
+				Object cardName = thisEntry.getKey();
+				Object cardPrice = thisEntry.getValue();
+				
+				Boolean foundCard = false;
+				for(int j=0; j<cardListDB.size(); j++){
+					if(cardName.toString().equals(cardListDB.get(j).getName())){
+						card = cardListDB.get(j);
+						foundCard = true;
+						break;
+					}
+				}
+				
+				if(foundCard){
+					
+					BigDecimal cardPriceBigDecimal = new BigDecimal(cardPrice.toString().substring(1).replace(",", ""));
+					
+		        	Query<?> queryCardPrices = session.createQuery("from CardPrice where card.cardId = :cardId");
+		        	queryCardPrices.setParameter("cardId", card.getCardId());
+		        	List<CardPrice> queryCardsPricesResults = (List<CardPrice>) queryCardPrices.getResultList();
+		        	
+		        	CardPrice cardPriceObject = new CardPrice();
+		        	
+	            	if(queryCardsPricesResults.size() == 1){
+	            		//System.out.println("Found card in database: " + card.getName() + " " + cardPriceBigDecimal + " Updating row");
+	            		cardPriceObject = queryCardsPricesResults.get(0);
+	            		cardPriceObject.setPrice(cardPriceBigDecimal);
+	            		
+	            	}else{
+	            		//System.out.println("Card not found in database: " + card.getName() + " " + cardPriceBigDecimal + " Inserting row");
+						cardPriceObject.setCard(card);
+						cardPriceObject.setPrice(cardPriceBigDecimal);
+	            	}
+					
+					//System.out.println("Saving Card " + cardName.toString() + " " + cardPriceBigDecimal);
+					session.save(cardPriceObject);
+				}else{
+					System.out.println("ERROR: Card not found " + cardName.toString());
+				}
+	       	}
+	        
+	        t.commit();
+	        
+        }catch(Exception e){
+        	System.out.println("Error " + e.getMessage());
+        	e.printStackTrace();
+        	System.exit(0);
+        }
+	}
 }

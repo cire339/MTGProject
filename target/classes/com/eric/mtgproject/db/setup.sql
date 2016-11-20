@@ -46,3 +46,12 @@ CREATE TABLE `card_set` (
   `SetType` varchar(255) NOT NULL,
   PRIMARY KEY (`SetID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1
+
+CREATE TABLE card_price (
+	CardPriceID varchar(255) NOT NULL,
+	CardID varchar(255) NOT NULL,
+	Price DECIMAL(2,2),
+	PRIMARY KEY (CardPriceID),
+	KEY card_id_fk (CardID),
+	CONSTRAINT card_id_fk FOREIGN KEY (CardID) REFERENCES card (CardID)
+)

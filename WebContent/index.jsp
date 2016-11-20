@@ -15,8 +15,6 @@
 	</head>
   <body>
   
-  	
-
     <div class="jumbotron">
       <div class="container">
         <h1>My MTG Project</h1>

@@ -2,17 +2,19 @@ package com.eric.mtgproject.helpers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import com.eric.mtgproject.db.Card;
+import com.eric.mtgproject.db.CardPrice;
 import com.eric.mtgproject.db.CardSet;
 import com.eric.mtgproject.utils.HibernateUtils;
 
 public class QueryDatabase {
 	
-@SuppressWarnings("unchecked")
-public static List<CardSet> getSets(){
+	@SuppressWarnings("unchecked")
+	public static List<CardSet> getSets(){
     
 		Session session = HibernateUtils.getSession();
 	
@@ -28,7 +30,7 @@ public static List<CardSet> getSets(){
 		
 		return querySetsResults;
 	}
-
+	
 	@SuppressWarnings("unchecked")
 	public static List<Card> getCardsById(String cardId){
 		
@@ -85,5 +87,27 @@ public static List<CardSet> getSets(){
 		return queryCardsResults;
 
 	}
-
+	
+	@SuppressWarnings("unchecked")
+	public static CardPrice getPriceById(String cardId){
+		
+		Session session = HibernateUtils.getSession();
+		List<CardPrice> queryCardPriceResult = new ArrayList<CardPrice>();
+		CardPrice cardPrice = new CardPrice();
+	    
+		try {
+	    	Query<?> queryCards = session.createQuery("from CardPrice where card.cardId = :id ");
+	    	queryCards.setParameter("id", cardId);
+	    	queryCardPriceResult = (List<CardPrice>) queryCards.getResultList();
+	    	if(queryCardPriceResult.size() == 1){
+	    		cardPrice = queryCardPriceResult.get(0);
+	    	}
+	    	
+	    } catch (Exception e) {
+	       System.out.println("Error " + e.getMessage());
+	    }
+		
+		return cardPrice;
+	
+	}
 }

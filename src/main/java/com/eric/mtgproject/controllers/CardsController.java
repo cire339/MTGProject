@@ -3,6 +3,7 @@ package com.eric.mtgproject.controllers;
 import org.springframework.web.servlet.mvc.Controller;
 
 import com.eric.mtgproject.db.Card;
+import com.eric.mtgproject.db.CardPrice;
 import com.eric.mtgproject.helpers.QueryDatabase;
 import com.eric.mtgproject.utils.HibernateUtils;
 
@@ -31,8 +32,10 @@ public class CardsController implements Controller {
     	
     	if(cardID != null){
     		List<Card> queryCardsResults = QueryDatabase.getCardsById(cardID);
+    		CardPrice cardPrice = QueryDatabase.getPriceById(cardID);
     		if(queryCardsResults.size() == 1){
     			model.addObject("cardInfo", queryCardsResults.get(0));
+    			model.addObject("cardPrice", cardPrice);
     		}else{
     			model = new ModelAndView("WEB-INF/jsp/errors/404.jsp");
     		}

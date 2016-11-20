@@ -1,5 +1,5 @@
 package com.eric.mtgproject.db;
-// Generated 10-Nov-2016 6:56:03 PM by Hibernate Tools 5.2.0.Beta1
+// Generated 19-Nov-2016 9:37:28 PM by Hibernate Tools 5.2.0.Beta1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -17,10 +17,6 @@ import javax.persistence.Table;
 @Table(name = "card_set", catalog = "mtg")
 public class CardSet implements java.io.Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6300284416355496705L;
 	private String setId;
 	private String block;
 	private String border;
@@ -31,6 +27,7 @@ public class CardSet implements java.io.Serializable {
 	private String releaseDate;
 	private String setName;
 	private String setType;
+	private String tcgplayerSetName;
 	private Set<Card> cards = new HashSet<Card>(0);
 
 	public CardSet() {
@@ -47,7 +44,8 @@ public class CardSet implements java.io.Serializable {
 	}
 
 	public CardSet(String setId, String block, String border, String gathererCode, String magicCardsInfoCode,
-			String oldCode, boolean onlineOnly, String releaseDate, String setName, String setType, Set<Card> cards) {
+			String oldCode, boolean onlineOnly, String releaseDate, String setName, String setType,
+			String tcgplayerSetName, Set<Card> cards) {
 		this.setId = setId;
 		this.block = block;
 		this.border = border;
@@ -58,6 +56,7 @@ public class CardSet implements java.io.Serializable {
 		this.releaseDate = releaseDate;
 		this.setName = setName;
 		this.setType = setType;
+		this.tcgplayerSetName = tcgplayerSetName;
 		this.cards = cards;
 	}
 
@@ -151,6 +150,15 @@ public class CardSet implements java.io.Serializable {
 
 	public void setSetType(String setType) {
 		this.setType = setType;
+	}
+
+	@Column(name = "TCGPlayerSetName")
+	public String getTcgplayerSetName() {
+		return this.tcgplayerSetName;
+	}
+
+	public void setTcgplayerSetName(String tcgplayerSetName) {
+		this.tcgplayerSetName = tcgplayerSetName;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cardSet")

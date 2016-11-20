@@ -12,6 +12,7 @@
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
         <property name="hibernate.search.autoregister_listeners">true</property>
         <property name="hibernate.validator.apply_to_ddl">false</property>
+        <mapping class="com.eric.mtgproject.db.CardPrice" />
         <mapping class="com.eric.mtgproject.db.Card" />
         <mapping class="com.eric.mtgproject.db.CardSet" />
     </session-factory>

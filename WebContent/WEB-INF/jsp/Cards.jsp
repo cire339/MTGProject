@@ -40,6 +40,20 @@
 						</tr>
 					</c:if>
 				</c:if>
+				<c:choose>
+					<c:when test="${not empty cardPrice.getPrice()}">
+						<tr>
+						<td>Price</td>
+						<td>$${cardPrice.getPrice()}</td>
+						</tr>
+					</c:when>
+					<c:otherwise>
+						<tr>
+						<td>Price</td>
+						<td>N/A</td>
+						</tr>
+					</c:otherwise>
+				</c:choose>
 			</table>
 			</div>
 			<div class=col-md-4>
