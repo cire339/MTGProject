@@ -2,7 +2,6 @@ package com.eric.mtgproject.helpers;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -32,6 +31,25 @@ public class QueryDatabase {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public static List<CardSet> getSetsById(String setId){
+    
+		Session session = HibernateUtils.getSession();
+	
+        List<CardSet> querySetsResults = new ArrayList<CardSet>();
+		
+		try {
+        	Query<?> querySets = session.createQuery("from CardSet S where S.setId = :setId ");
+        	querySets.setParameter("setId", setId);
+        	querySetsResults = (List<CardSet>) querySets.getResultList();
+        	
+        } catch (Exception e) {
+           System.out.println("Error " + e.getMessage());
+        } 
+		
+		return querySetsResults;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public static List<Card> getCardsById(String cardId){
 		
 		Session session = HibernateUtils.getSession();
@@ -40,6 +58,25 @@ public class QueryDatabase {
 		try {
 	    	Query<?> queryCards = session.createQuery("from Card C where C.cardId = :id ");
 	    	queryCards.setParameter("id", cardId);
+	    	queryCardsResults = (List<Card>) queryCards.getResultList();
+	    	
+	    } catch (Exception e) {
+	       System.out.println("Error " + e.getMessage());
+	    }
+		
+		return queryCardsResults;
+	
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static List<Card> getCardsByName(String cardName){
+		
+		Session session = HibernateUtils.getSession();
+	    List<Card> queryCardsResults = new ArrayList<Card>();
+	    
+		try {
+	    	Query<?> queryCards = session.createQuery("from CardSet S, Card C where setType in ('core', 'expansion') and C.name like :name ");
+	    	queryCards.setParameter("name", "%" + cardName + "%");
 	    	queryCardsResults = (List<Card>) queryCards.getResultList();
 	    	
 	    } catch (Exception e) {

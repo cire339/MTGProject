@@ -15,6 +15,9 @@ public class TestingClass {
 		
 	public static void main(String[] args){
 		
+		List<String> sets = Arrays.asList("10th Edition");
+		
+		/*
 		List<String> sets = Arrays.asList("Shards of Alara", "Conflux", "Alara Reborn", "Magic 2010 (M10)", 
 				"Zendikar", "Worldwake", "Rise of the Eldrazi", "Magic 2011 (M11)", 
 				"Scars of Mirrodin", "Mirrodin Besieged", "New Phyrexia", 
@@ -24,21 +27,22 @@ public class TestingClass {
 				"Magic 2015 (M15)", "Khans of Tarkir", "Fate Reforged", "Dragons of Tarkir", 
 				"Magic Origins", "Battle for Zendikar", "Oath of the Gatewatch", 
 				"Shadows over Innistrad", "Eldritch Moon", "Kaladesh");
+		*/
 		
 		//Gets Sets we want to scrape
     	Map<String, String> cardList = new HashMap<String, String>();
-    	
     	List<CardSet> cardSetList = QueryDatabase.getSets();
+    	//List<CardSet> cardSetList = QueryDatabase.getSetsById("10E");
     	
-		for(int i=0; i<sets.size(); i++){
-			//String dbSetName = cardSetList.get(i).getSetName();
-			//String tcgSetName = cardSetList.get(i).getTcgplayerSetName();
+		for(int i=0; i<cardSetList.size(); i++){
+			String dbSetName = cardSetList.get(i).getSetName();
+			String tcgSetName = cardSetList.get(i).getTcgplayerSetName();
 			
 			//Get Prices from TCGPlayer
-			cardList = PriceScrapper.scrapePrices(sets.get(i));
+			cardList = PriceScrapper.scrapePrices(tcgSetName);
 			
 			//Insert Price in Database
-			PopulateDatabase.updatePriceTable(cardList, sets.get(i));
+			PopulateDatabase.updatePriceTable(cardList, dbSetName);
 		}
 		
 		System.out.println("Back in main.");

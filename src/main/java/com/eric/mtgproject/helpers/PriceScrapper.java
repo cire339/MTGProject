@@ -2,26 +2,15 @@ package com.eric.mtgproject.helpers;
 
 import java.io.IOException;
 import java.net.URLEncoder;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import org.hibernate.Session;
-import org.hibernate.query.Query;
 import org.jsoup.Jsoup;
 import org.jsoup.Connection.Response;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
-import com.eric.mtgproject.db.CardSet;
-import com.eric.mtgproject.utils.HibernateUtils;
 
 public class PriceScrapper {
 	
@@ -70,12 +59,6 @@ public class PriceScrapper {
 					cardList.put(cardName.text().substring(1), cardPrice.text());
 				}
 			}
-			
-			/*
-			//Write to file
-			Path file = Paths.get("D:\\workspace\\MTGProject\\WebContent\\WEB-INF\\csv\\" + setName.replace(" ", "") + ".csv");
-			Files.write(file, cardList, Charset.forName("UTF-8"));
-			*/
 	        
 		} catch (IOException e) {
 			e.printStackTrace();

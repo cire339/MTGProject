@@ -11,9 +11,9 @@
       <a class="navbar-brand" href="./sets">Sets</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
-      <form class="navbar-form navbar-right">
+      <form name="search" class="navbar-form navbar-right" action="./search">
         <div class="form-group">
-          <input type="text" placeholder="Search" class="form-control">
+          <input name="card" id="test" type="text" placeholder="Search" class="form-control">
         </div>
         <button type="submit" class="btn btn-success">Search</button>
       </form>

@@ -33,7 +33,7 @@
 		        <div class="col-md-4">
 		        	<table class="table table-striped">
 		                    </c:if>
-							<tr><td><i style="padding-right: 5px" class="ss ss-${set.getSetId().toLowerCase()}"></i><a href="./sets?set=${set.getSetId()}">${set.getSetName()}</a></td></tr>
+							<tr><td><i style="padding-right: 5px" class="ss ss-${set.getSetId().toLowerCase()}"></i><a onclick='wat()' href="./sets?set=${set.getSetId()}">${set.getSetName()}</a></td></tr>
 						</c:forEach>
 					</table>
 				</div>
@@ -48,7 +48,15 @@
 		        <div class="col-md-4">
 		        	<table class="table table-striped">
 		                    </c:if>
-							<tr><td><a href="./cards?card=${card.getCardId()}">${card.getName()}</a></td></tr>
+		                    
+		                    <c:choose>
+			                    <c:when test="${not empty card.getCardNames()}">
+			                    	<tr><td><a href="./cards?card=${card.getCardId()}">${card.getCardNames()}</a></td></tr>
+			                    </c:when>
+			                    <c:otherwise>
+									<tr><td><a href="./cards?card=${card.getCardId()}">${card.getName()}</a></td></tr>
+								</c:otherwise>
+							 </c:choose>
 						</c:forEach>
 					</table>
 				</div>

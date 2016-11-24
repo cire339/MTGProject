@@ -7,7 +7,7 @@
         <property name="hibernate.bytecode.use_reflection_optimizer">false</property>
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="hibernate.connection.password">Fraise123</property>
-        <property name="hibernate.connection.url">jdbc:mysql://epdbinstance.cbqntxbfrjzg.us-west-2.rds.amazonaws.com:3306/mtg</property>
+        <property name="hibernate.connection.url">jdbc:mysql://epdbinstance.cbqntxbfrjzg.us-west-2.rds.amazonaws.com:3306/mtg/?autoReconnect=true</property>
         <property name="hibernate.connection.username">ericpicot</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
         <property name="hibernate.search.autoregister_listeners">true</property>

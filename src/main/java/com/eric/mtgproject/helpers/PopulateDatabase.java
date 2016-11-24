@@ -154,6 +154,10 @@ public class PopulateDatabase {
         try{
 	        t = session.beginTransaction();
 	        
+        	Query<?> queryCardPrices = session.createQuery("from CardPrice where card.cardSet.setName = :setName");
+        	queryCardPrices.setParameter("setName", setName);
+        	List<CardPrice> queryCardsPricesResults = (List<CardPrice>) queryCardPrices.getResultList();
+	        
 	        //Get Cards from the set we want to update
 	        List<Card> cardListDB = QueryDatabase.getCardsBySetName(setName);
 	        
@@ -176,27 +180,31 @@ public class PopulateDatabase {
 				
 				if(foundCard){
 					
-					BigDecimal cardPriceBigDecimal = new BigDecimal(cardPrice.toString().substring(1).replace(",", ""));
+					String cardPriceString = cardPrice.toString().substring(1).replace(",", "");						
+					BigDecimal cardPriceBigDecimal = null;
+					try{
+						cardPriceBigDecimal = new BigDecimal(cardPriceString);
+					}catch(NumberFormatException e){
+						System.out.println("ERROR: Price N/A " + cardName.toString());
+					}
 					
-		        	Query<?> queryCardPrices = session.createQuery("from CardPrice where card.cardId = :cardId");
-		        	queryCardPrices.setParameter("cardId", card.getCardId());
-		        	List<CardPrice> queryCardsPricesResults = (List<CardPrice>) queryCardPrices.getResultList();
+					CardPrice cardPriceObject = new CardPrice();
 		        	
-		        	CardPrice cardPriceObject = new CardPrice();
-		        	
-	            	if(queryCardsPricesResults.size() == 1){
-	            		//System.out.println("Found card in database: " + card.getName() + " " + cardPriceBigDecimal + " Updating row");
-	            		cardPriceObject = queryCardsPricesResults.get(0);
-	            		cardPriceObject.setPrice(cardPriceBigDecimal);
-	            		
-	            	}else{
-	            		//System.out.println("Card not found in database: " + card.getName() + " " + cardPriceBigDecimal + " Inserting row");
+		        	Boolean update = false;
+	        		for(int k=0; k<queryCardsPricesResults.size(); k++){
+	        			if(queryCardsPricesResults.get(k).getCard().getCardId().equals(card.getCardId())){
+	        				cardPriceObject = (queryCardsPricesResults.get(k));
+	                		cardPriceObject.setPrice(cardPriceBigDecimal);
+	        				update = true;
+	        			}
+	        		}
+
+	            	if(!update){
 						cardPriceObject.setCard(card);
 						cardPriceObject.setPrice(cardPriceBigDecimal);
 	            	}
-					
-					//System.out.println("Saving Card " + cardName.toString() + " " + cardPriceBigDecimal);
-					session.save(cardPriceObject);
+	            	
+	            	session.save(cardPriceObject);
 				}else{
 					System.out.println("ERROR: Card not found " + cardName.toString());
 				}
