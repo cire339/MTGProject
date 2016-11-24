@@ -8,13 +8,13 @@
 	
 	   <div class="page-header">
 	     <div class="container">
-	       <h2>${cardInfo.getName()}</h2>
+	       <h2>Search Results</h2>
 	     </div>
 	   </div>
 	
 	   <div class="container">
 	   <c:choose>
-	    <c:when test="${resultSearch.size() > 0}">
+	    <c:when test="${not empty searchResult}">
 	    	<div class=col-md-8>
 			<table class="table table-bordered">
 				<tr>
@@ -24,10 +24,17 @@
 				<td>Name</td>
 				<td>Set</td>
 				</tr>
-				<c:forEach var="card" items="${resultSearch}" varStatus="loop">
+				<c:forEach var="card" items="${searchResult}" varStatus="loop">
 				<tr>
-				<td><a href="./cards?card=${card.getCardId()}">${card.getCardNames()}</a></td>
-				<td><a href="./sets?set=${card.getCardSet().getSetID()}">${card.getCardSet().getSetName()}</a></td>
+				<c:choose>
+                    <c:when test="${not empty card.getCardNames()}">
+                    	<td><a href="./cards?card=${card.getCardId()}">${card.getCardNames()}</a></td>
+                    </c:when>
+                    <c:otherwise>
+						<td><a href="./cards?card=${card.getCardId()}">${card.getName()}</a></td>
+					</c:otherwise>
+				 </c:choose>
+				 <td><a href="./sets?set=${card.getCardSet().getSetId()}">${card.getCardSet().getSetName()}</a></td>
 				</tr>
 				</c:forEach>
 			</table>

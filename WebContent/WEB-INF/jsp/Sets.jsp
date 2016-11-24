@@ -33,7 +33,7 @@
 		        <div class="col-md-4">
 		        	<table class="table table-striped">
 		                    </c:if>
-							<tr><td><i style="padding-right: 5px" class="ss ss-${set.getSetId().toLowerCase()}"></i><a onclick='wat()' href="./sets?set=${set.getSetId()}">${set.getSetName()}</a></td></tr>
+							<tr><td><i style="padding-right: 5px" class="ss ss-${set.getSetId().toLowerCase()}"></i><a href="./sets?set=${set.getSetId()}">${set.getSetName()}</a></td></tr>
 						</c:forEach>
 					</table>
 				</div>

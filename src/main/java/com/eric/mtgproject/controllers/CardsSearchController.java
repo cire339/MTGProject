@@ -30,7 +30,7 @@ public class CardsSearchController implements Controller {
     	
     	if(cardName.length() > 2){
     		List<Card> queryCardsResults = QueryDatabase.getCardsByName(cardName);
-    		model.addObject("resultSearch", queryCardsResults);
+    		model.addObject("searchResult", queryCardsResults);
     	}
     	
     	return model;

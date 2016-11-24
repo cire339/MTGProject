@@ -75,9 +75,14 @@ public class QueryDatabase {
 	    List<Card> queryCardsResults = new ArrayList<Card>();
 	    
 		try {
-	    	Query<?> queryCards = session.createQuery("from CardSet S, Card C where setType in ('core', 'expansion') and C.name like :name ");
+	    	Query<?> queryCards = session.createQuery("select C from Card C, CardSet S where C.cardSet.setId = S.setId and S.setType in ('core', 'expansion') and C.name like :name ");
 	    	queryCards.setParameter("name", "%" + cardName + "%");
 	    	queryCardsResults = (List<Card>) queryCards.getResultList();
+	    	
+	    	System.out.println(queryCardsResults.size());
+	    	for(int i=0; i<queryCardsResults.size(); i++){
+	    		System.out.println(queryCardsResults.get(i).getName());
+	    	}
 	    	
 	    } catch (Exception e) {
 	       System.out.println("Error " + e.getMessage());
