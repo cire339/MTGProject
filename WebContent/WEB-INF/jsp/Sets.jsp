@@ -51,10 +51,10 @@
 		                    
 		                    <c:choose>
 			                    <c:when test="${not empty card.getCardNames()}">
-			                    	<tr><td><a href="./cards?card=${card.getCardId()}">${card.getCardNames()}</a></td></tr>
+			                    	<tr><td><i style="padding-right: 5px" class="ss ss-${card.getCardSet().getSetId().toLowerCase()} ss-${card.getRarity().split(' ')[0].toLowerCase()}"></i><a href="./cards?card=${card.getCardId()}">${card.getCardNames()}</a></td></tr>
 			                    </c:when>
 			                    <c:otherwise>
-									<tr><td><a href="./cards?card=${card.getCardId()}">${card.getName()}</a></td></tr>
+									<tr><td><i style="padding-right: 5px" class="ss ss-${card.getCardSet().getSetId().toLowerCase()} ss-${card.getRarity().split(' ')[0].toLowerCase()}"></i><a href="./cards?card=${card.getCardId()}">${card.getName()}</a></td></tr>
 								</c:otherwise>
 							 </c:choose>
 						</c:forEach>

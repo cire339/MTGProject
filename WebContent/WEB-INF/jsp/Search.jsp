@@ -21,8 +21,8 @@
 				<th>Search Results</th>
 				</tr>
 				<tr>
-				<td>Name</td>
-				<td>Set</td>
+				<td><b>Name</b></td>
+				<td><b>Set</b></td>
 				</tr>
 				<c:forEach var="card" items="${searchResult}" varStatus="loop">
 				<tr>
@@ -34,7 +34,7 @@
 						<td><a href="./cards?card=${card.getCardId()}">${card.getName()}</a></td>
 					</c:otherwise>
 				 </c:choose>
-				 <td><a href="./sets?set=${card.getCardSet().getSetId()}">${card.getCardSet().getSetName()}</a></td>
+				 <td><i style="padding-right: 5px" class="ss ss-${card.getCardSet().getSetId().toLowerCase()}"></i><a href="./sets?set=${card.getCardSet().getSetId()}">${card.getCardSet().getSetName()}</a></td>
 				</tr>
 				</c:forEach>
 			</table>

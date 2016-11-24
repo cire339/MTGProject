@@ -79,11 +79,6 @@ public class QueryDatabase {
 	    	queryCards.setParameter("name", "%" + cardName + "%");
 	    	queryCardsResults = (List<Card>) queryCards.getResultList();
 	    	
-	    	System.out.println(queryCardsResults.size());
-	    	for(int i=0; i<queryCardsResults.size(); i++){
-	    		System.out.println(queryCardsResults.get(i).getName());
-	    	}
-	    	
 	    } catch (Exception e) {
 	       System.out.println("Error " + e.getMessage());
 	    }
