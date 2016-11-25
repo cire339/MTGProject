@@ -26,15 +26,8 @@
 				</tr>
 				<c:forEach var="card" items="${searchResult}" varStatus="loop">
 				<tr>
-				<c:choose>
-                    <c:when test="${not empty card.getCardNames()}">
-                    	<td><a href="./cards?card=${card.getCardId()}">${card.getCardNames()}</a></td>
-                    </c:when>
-                    <c:otherwise>
-						<td><a href="./cards?card=${card.getCardId()}">${card.getName()}</a></td>
-					</c:otherwise>
-				 </c:choose>
-				 <td><i style="padding-right: 5px" class="ss ss-${card.getCardSet().getSetId().toLowerCase()}"></i><a href="./sets?set=${card.getCardSet().getSetId()}">${card.getCardSet().getSetName()}</a></td>
+				<td><a href="./cards?card=${card.getCardId()}">${card.getName()}</a></td>
+				<td><i style="padding-right: 5px" class="ss ss-${card.getCardSet().getSetId().toLowerCase()}"></i><a href="./sets?set=${card.getCardSet().getSetId()}">${card.getCardSet().getSetName()}</a></td>
 				</tr>
 				</c:forEach>
 			</table>

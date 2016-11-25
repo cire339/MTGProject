@@ -12,6 +12,39 @@ import com.eric.mtgproject.utils.HibernateUtils;
 
 public class QueryDatabase {
 	
+	/* 
+	 * Format split and flip cards 
+	 */
+	private static List<Card> formatSpecialCards(List<Card> cards){
+		
+		//Fix split cards
+		for(int i=0; i<cards.size(); i++){
+			Card card = cards.get(i);
+			String cardLayout = card.getLayout();
+			//Determine if card is a split card.
+			if(cardLayout.equals("split") || cardLayout.equals("double-faced")){
+				String cardPart = card.getCardNumber().substring(card.getCardNumber().length() - 1);
+				String[] cardNames = card.getCardNames().substring(1, card.getCardNames().length() - 1).split(", ");
+				
+				String newName = cardNames[0] + " // " + cardNames[1];
+				if(cardLayout.equals("split")){
+					newName = cardNames[0] + " // " + cardNames[1];
+				}else if(cardLayout.equals("double-faced")){
+					newName = cardNames[0];
+				}
+				cards.get(i).setName(newName);
+					
+				//Remove other parts
+				if(cardPart.equals("b") || cardPart.equals("c") || cardPart.equals("d")){
+					cards.remove(i);
+					i--;
+				}
+			}
+		}
+		
+		return cards;
+	}
+	
 	@SuppressWarnings("unchecked")
 	public static List<CardSet> getSets(){
     
@@ -75,9 +108,19 @@ public class QueryDatabase {
 	    List<Card> queryCardsResults = new ArrayList<Card>();
 	    
 		try {
-	    	Query<?> queryCards = session.createQuery("select C from Card C, CardSet S where C.cardSet.setId = S.setId and S.setType in ('core', 'expansion') and C.name like :name ");
+	    	Query<?> queryCards = session.createQuery("select C from Card C, CardSet S where C.cardSet.setId = S.setId and S.setType in ('core', 'expansion') and C.name like :name order by C.name");
 	    	queryCards.setParameter("name", "%" + cardName + "%");
 	    	queryCardsResults = (List<Card>) queryCards.getResultList();
+	    	
+	    	for(int i=0;i <queryCardsResults.size();i++){
+	    		System.out.println(queryCardsResults.get(i).getName());
+	    	}
+	    	
+	    	queryCardsResults = formatSpecialCards(queryCardsResults);
+	    	
+	    	for(int i=0;i <queryCardsResults.size();i++){
+	    		System.out.println(queryCardsResults.get(i).getName());
+	    	}
 	    	
 	    } catch (Exception e) {
 	       System.out.println("Error " + e.getMessage());
@@ -98,6 +141,8 @@ public class QueryDatabase {
         	queryCards.setParameter("setName", setName);
         	queryCardsResults = (List<Card>) queryCards.getResultList();
         	
+        	queryCardsResults = formatSpecialCards(queryCardsResults);
+        	
         } catch (Exception e) {
            System.out.println("Error " + e.getMessage());
         }
@@ -116,6 +161,8 @@ public class QueryDatabase {
         	Query<?> queryCards = session.createQuery("from Card C where cardSet.setId = :setId order by name");
         	queryCards.setParameter("setId", setId);
         	queryCardsResults = (List<Card>) queryCards.getResultList();
+        	
+        	queryCardsResults = formatSpecialCards(queryCardsResults);
         	
         } catch (Exception e) {
            System.out.println("Error " + e.getMessage());
