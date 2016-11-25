@@ -16,32 +16,23 @@ public class PriceScrapper {
 	
 	public static Map<String, String> scrapePrices(String setName){
 		
-		/*
-		//Skip set if file already exists..!
-		Path path = Paths.get("D:\\workspace\\MTGProject\\WebContent\\WEB-INF\\csv\\" + setName.replace(" ", "") + ".csv");
-		if(Files.exists(path)){
-			System.out.println("File already exists: " + path);
-			return false;
-		}
-		*/
-		
     	Map<String, String> cardList = new HashMap<String, String>();
 		
 	    try {
 	    	System.out.println("setName: " + setName);
-	    	Response response = Jsoup.connect("http://magic.tcgplayer.com/db/search_result.asp?Set_Name=" + URLEncoder.encode(setName, "UTF-8")).followRedirects(false).execute();
+	    	Response response = Jsoup.connect("http://prices.tcgplayer.com/price-guide/magic/" + URLEncoder.encode(setName.toLowerCase(), "UTF-8")).followRedirects(false).execute();
 	    	if(response.statusCode() != 200 ){
 				System.out.println("Error - Page not found or redirected");
 				return cardList;
 	    	}
 	    	
-			Document doc = Jsoup.connect("http://magic.tcgplayer.com/db/search_result.asp?Set_Name=" + URLEncoder.encode(setName, "UTF-8")).get();
-			Elements tables = doc.select("table[width=540][style=\"font-size:11px\"][cellspacing=0][cellpadding=1]");
-			Elements cards = tables.select("tr");
-			Elements cardInfo;
-			Element cardName; 
-			Element cardPrice;
-			String[] rarity = {"C", "U", "R", "M"};
+			Document doc = Jsoup.connect("http://prices.tcgplayer.com/price-guide/magic/" + URLEncoder.encode(setName.toLowerCase(), "UTF-8")).get();
+			Elements tables = doc.getElementsByClass("priceGuideTable tablesorter");
+			Elements cards = tables.select("tbody").select("tr");
+			String cardName; 
+			String cardType;
+			String cardPrice;
+			String[] rarity = {"C", "U", "R", "M", "L"};
 			
 			//Exit if more than one table returned.
 			if(tables.size() != 1){
@@ -50,13 +41,21 @@ public class PriceScrapper {
 			}
 			
 			for(int j=0; j<cards.size(); j++){
-				cardInfo = cards.get(j).select("td");
+				
+				cardName = cards.get(j).select("td[class=product]").select("div[class=productDetail]").select("a").text();
+				cardType = cards.get(j).select("td[class=rarity]").select("div").text();
+				cardPrice = cards.get(j).select("td[class=medianPrice]").select("div").text();
+				
+				//If price is missing, try market price.
+				if(cardPrice.equals("—")){
+					cardPrice = cards.get(j).select("td[class=marketPrice]").select("div").text();
+				}
+				
+				//System.out.println("Name: " + cardName + ", Type: " + cardType + ", Price: " + cardPrice);
 				
 				//If not regular card, skip it
-				if( Arrays.asList(rarity).indexOf(cardInfo.get(3).text()) != -1 ){
-					cardName = cardInfo.get(0);
-					cardPrice = cardInfo.get(5);
-					cardList.put(cardName.text().substring(1), cardPrice.text());
+				if( Arrays.asList(rarity).indexOf(cardType) != -1 ){
+					cardList.put(cardName, cardPrice);
 				}
 			}
 	        

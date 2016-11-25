@@ -163,6 +163,8 @@ public class PopulateDatabase {
 	        
 	        Card card = new Card();
 	        Iterator<Entry<String, String>> entries = cardListMap.entrySet().iterator();
+	        
+	        int index = 0;
 	        while (entries.hasNext()) {
 	        	
 				Entry<String, String> thisEntry = (Entry<String, String>) entries.next();
@@ -180,6 +182,7 @@ public class PopulateDatabase {
 				
 				if(foundCard){
 					
+					//Change price to fit Database format.
 					String cardPriceString = cardPrice.toString().substring(1).replace(",", "");						
 					BigDecimal cardPriceBigDecimal = null;
 					try{
@@ -189,7 +192,8 @@ public class PopulateDatabase {
 					}
 					
 					CardPrice cardPriceObject = new CardPrice();
-		        	
+					
+		        	//Check if we need to update or insert.
 		        	Boolean update = false;
 	        		for(int k=0; k<queryCardsPricesResults.size(); k++){
 	        			if(queryCardsPricesResults.get(k).getCard().getCardId().equals(card.getCardId())){
@@ -197,14 +201,17 @@ public class PopulateDatabase {
 	                		cardPriceObject.setPrice(cardPriceBigDecimal);
 	        				update = true;
 	        			}
-	        		}
+	        		}	        		
 
 	            	if(!update){
+	            		System.out.println("Insert new card: " + card.getName());
 						cardPriceObject.setCard(card);
 						cardPriceObject.setPrice(cardPriceBigDecimal);
 	            	}
 	            	
 	            	session.save(cardPriceObject);
+
+	                index++;
 				}else{
 					System.out.println("ERROR: Card not found " + cardName.toString());
 				}

@@ -21,18 +21,16 @@ public class QueryDatabase {
 		for(int i=0; i<cards.size(); i++){
 			Card card = cards.get(i);
 			String cardLayout = card.getLayout();
-			//Determine if card is a split card.
-			if(cardLayout.equals("split") || cardLayout.equals("double-faced")){
+			
+			//Determine if card is a special card.
+			if(cardLayout.equals("split") || cardLayout.equals("double-faced") || cardLayout.equals("meld")){
 				String cardPart = card.getCardNumber().substring(card.getCardNumber().length() - 1);
 				String[] cardNames = card.getCardNames().substring(1, card.getCardNames().length() - 1).split(", ");
 				
-				String newName = cardNames[0] + " // " + cardNames[1];
+				//Rename split card.
 				if(cardLayout.equals("split")){
-					newName = cardNames[0] + " // " + cardNames[1];
-				}else if(cardLayout.equals("double-faced")){
-					newName = cardNames[0];
+					cards.get(i).setName(cardNames[0] + " // " + cardNames[1]);
 				}
-				cards.get(i).setName(newName);
 					
 				//Remove other parts
 				if(cardPart.equals("b") || cardPart.equals("c") || cardPart.equals("d")){
@@ -142,6 +140,25 @@ public class QueryDatabase {
         	queryCardsResults = (List<Card>) queryCards.getResultList();
         	
         	queryCardsResults = formatSpecialCards(queryCardsResults);
+        	
+        } catch (Exception e) {
+           System.out.println("Error " + e.getMessage());
+        }
+		
+		return queryCardsResults;
+
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static List<Card> getCardsBySetNameNonFormatted(String setName){
+		
+		Session session = HibernateUtils.getSession();
+        List<Card> queryCardsResults = new ArrayList<Card>();
+		
+		try {
+        	Query<?> queryCards = session.createQuery("from Card C where cardSet.setName = :setName");
+        	queryCards.setParameter("setName", setName);
+        	queryCardsResults = (List<Card>) queryCards.getResultList();
         	
         } catch (Exception e) {
            System.out.println("Error " + e.getMessage());
